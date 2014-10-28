@@ -79,18 +79,23 @@ describe("Prueba Game Board", function(){
 
 	it("GameBoard.iterate()", function(){
 		var gb = new GameBoard();
-		var dummy = {
-			doThings: function(){}
+		var dummy;
+		dummy = {
+			doThings: function(){},
 		};
 		spyOn(dummy, "doThings").andCallThrough();
 		gb.add(dummy);
-		gb.iterate('doThings');
+		gb.iterate(doThings);
 		expect(dummy.doThings).toHaveBeenCalled();
 	});
 
 
 
 });
+
+
+
+
 
 /*
 
