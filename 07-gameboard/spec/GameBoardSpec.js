@@ -88,11 +88,11 @@ describe("Prueba Game Board", function(){
 		expect(dummy.doThings).toHaveBeenCalled();
 	});
 
-/*	it("GameBoard.detect()", function(){
+	it("GameBoard.detect()", function(){
 		var gb = new GameBoard();
 		gb.add(42);
-		expect(gb.detect(function(x){ return x > 0; })).toBe(42);
-	});	*/
+		expect(gb.detect(function(){ return this > 0; })).toBe(42);
+	});
 
 
 });
