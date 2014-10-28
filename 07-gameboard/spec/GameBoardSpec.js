@@ -88,10 +88,11 @@ describe("Prueba Game Board", function(){
 		expect(dummy.doThings).toHaveBeenCalled();
 	});
 
-	it("GameBoard.detect()", function(){
+	it("GameBoard.step()", function(){
 		var gb = new GameBoard();
-		gb.add(42);
-		expect(gb.detect(function(){ return this > 0; })).toBe(42);
+		spyOn(gb, "step").andCallThrough();
+		gb.step();
+		expect(gb.step).toHaveBeenCalled();
 	});
 
 
@@ -105,14 +106,6 @@ var GameBoard = function() {
 
     // Colección de objetos contenidos por este tablero
     this.objects = [];
-
-    // Devuelve el primer objeto de objects para el que func es true
-    this.detect = function(func) {
-	for(var i = 0,val=null, len=this.objects.length; i < len; i++) {
-	    if(func.call(this.objects[i])) return this.objects[i];
-	}
-	return false;
-    };
 
     // Cuando Game.loop() llame a step(), hay que llamar al método
     // step() de todos los objetos contenidos en el tablero.  Antes se
