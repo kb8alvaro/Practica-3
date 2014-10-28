@@ -95,6 +95,13 @@ describe("Prueba Game Board", function(){
 		expect(gb.step).toHaveBeenCalled();
 	});
 
+	it("GameBoard.draw()", function(){
+		var gb = new GameBoard();
+		spyOn(gb, "draw").andCallThrough();
+		gb.draw();
+		expect(gb.draw).toHaveBeenCalled();
+	});
+
 
 });
 
@@ -106,22 +113,6 @@ var GameBoard = function() {
 
     // Colección de objetos contenidos por este tablero
     this.objects = [];
-
-    // Cuando Game.loop() llame a step(), hay que llamar al método
-    // step() de todos los objetos contenidos en el tablero.  Antes se
-    // inicializa la lista de objetos pendientes de borrar, y después
-    // se borran los que hayan aparecido en dicha lista
-    this.step = function(dt) { 
-	this.resetRemoved();
-	this.iterate('step',dt);
-	this.finalizeRemoved();
-    };
-
-    // Cuando Game.loop() llame a draw(), hay que llamar al método
-    // draw() de todos los objetos contenidos en el tablero
-    this.draw= function(ctx) {
-	this.iterate('draw',ctx);
-    };
 
     // Comprobar si hay intersección entre los rectángulos que
     // circunscriben a los objetos o1 y o2
