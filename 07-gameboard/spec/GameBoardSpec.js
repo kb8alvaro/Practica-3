@@ -102,6 +102,16 @@ describe("Prueba Game Board", function(){
 		expect(gb.draw).toHaveBeenCalled();
 	});
 
+	it("GameBoard.overlap()", function(){
+		var gb = new GameBoard();
+		var r1 = { x:0, y:0, h:3, w:3};
+		var r2 = { x:2, y:2, h:4, w:5};
+		var r3 = { x:4, y:4, h:1, w:3};
+		expect(gb.overlap(r1,r2)).toBeTruthy();
+		expect(gb.overlap(r1,r3)).toBeFalsy();
+		expect(gb.overlap(r2,r3)).toBeTruthy();
+	});
+
 
 });
 
@@ -109,19 +119,6 @@ describe("Prueba Game Board", function(){
 
 
 var GameBoard = function() {
-    var board = this;
-
-    // Colección de objetos contenidos por este tablero
-    this.objects = [];
-
-    // Comprobar si hay intersección entre los rectángulos que
-    // circunscriben a los objetos o1 y o2
-    this.overlap = function(o1,o2) {
-	// return !((o1 encima de o2)    || (o1 debajo de o2)   ||
-        //          (o1 a la izda de o2) || (o1 a la dcha de o2)
-	return !((o1.y+o1.h-1<o2.y) || (o1.y>o2.y+o2.h-1) ||
-		 (o1.x+o1.w-1<o2.x) || (o1.x>o2.x+o2.w-1));
-    };
 
     // Encontrar el primer objeto de tipo type que colisiona con obj
     // Si se llama sin type, en contrar el primer objeto de cualquier
