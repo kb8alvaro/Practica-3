@@ -43,7 +43,7 @@ describe("Prueba Player Missile", function(){
 		SpriteSheet = { map: {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 } } }
 		var board = new GameBoard();
 		spyOn(board,"remove");
-		var pm = new PlayerMissile(0,17);
+		var pm = new PlayerMissile(1,17);
 		board.add(pm);
 		pm.step(0.01);
 		expect(pm.y).toEqual(0);
@@ -51,29 +51,20 @@ describe("Prueba Player Missile", function(){
 		expect(board.remove).toHaveBeenCalled();
 	});
 
+	it("PlayerMissile.draw()", function(){
+		SpriteSheet = { map: {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 } }, draw: function(){} }
+		var board = new GameBoard();
+		spyOn(SpriteSheet,"draw").andCallThrough();
+		var pm = new PlayerMissile(1,17);
+		board.add(pm);
+		pm.step(0.01);
+		pm.draw();
+		expect(SpriteSheet.draw).toHaveBeenCalled();
+		expect(SpriteSheet.draw.calls[0].args[1]).toBe('missile');
+		expect(SpriteSheet.draw.calls[0].args[2]).toBe(0);
+		expect(SpriteSheet.draw.calls[0].args[3]).toBe(0);
+	});
+
 });
 
-/*
-// Constructor los misiles.
-// Los metodos de esta clase los añadimos a su prototipo. De esta
-// forma solo existe una copia de cada uno para todos los misiles, y
-// no una copia para cada objeto misil
-var PlayerMissile = function(x,y) {
-    this.w = SpriteSheet.map['missile'].w;
-    this.h = SpriteSheet.map['missile'].h;
-    this.x = x - this.w/2; 
 
-    this.y = y - this.h; 
-    this.vy = -700;
-};
-
-
-PlayerMissile.prototype.draw = function(ctx)  {
-    SpriteSheet.draw(ctx,'missile',this.x,this.y);
-};
-
-
-$(function() {
-    Game.initialize("game",sprites,startGame);
-});
-*/
