@@ -112,6 +112,17 @@ describe("Prueba Game Board", function(){
 		expect(gb.overlap(r2,r3)).toBeTruthy();
 	});
 
+	it("GameBoard.collide()", function(){
+		var gb = new GameBoard();
+		var r1 = { x:0, y:0, h:3, w:3};
+		var r2 = { x:2, y:2, h:4, w:5};
+		var r3 = { x:4, y:4, h:1, w:3};
+		gb.add(r1);
+		gb.add(r2);
+		gb.add(r3);
+		expect(gb.collide(r2)).toEqual(r1);
+		expect(gb.collide(r3)).toEqual(r2);
+	});
 
 });
 
