@@ -33,9 +33,11 @@ describe("Prueba Player Missile", function(){
   beforeEach(function(){
 		loadFixtures('index.html');
 		s = SpriteSheet;	
+		g = Game;
 	});
   afterEach(function(){
-		SpriteSheet = s;	
+		SpriteSheet = s;
+		Game = g;	
 	});
 
 
@@ -52,7 +54,7 @@ describe("Prueba Player Missile", function(){
 	});
 
 	it("PlayerMissile.draw()", function(){
-		SpriteSheet = { map: {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 } }, draw: function(){} }
+		SpriteSheet = { map: {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 } }, draw: function(){} };
 		var board = new GameBoard();
 		spyOn(SpriteSheet,"draw").andCallThrough();
 		var pm = new PlayerMissile(1,17);
@@ -64,6 +66,29 @@ describe("Prueba Player Missile", function(){
 		expect(SpriteSheet.draw.calls[0].args[2]).toBe(0);
 		expect(SpriteSheet.draw.calls[0].args[3]).toBe(0);
 	});
+
+	it("modificacion tecla de disparo", function(){
+		SpriteSheet = { map: {
+											ship: { sx: 0, sy: 0, w: 37, h: 42, frames: 1 },
+											missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 } },
+										draw: function(){} };
+		var board = new GameBoard();
+		var nave = new PlayerShip();
+		board.add(nave);		
+		Game.keys['fire'] = false;
+		board.step(0);
+		Game.keys['fire'] = true;
+		board.step(1);
+		expect(board.objects.length).toBe(3);
+		board.step(0.4);				
+		expect(board.objects.length).toBe(3);  //esperamos que no haya nuevos misiles pese a no dejar de pulsar fire
+		Game.keys['fire'] = false;
+		board.step(0);
+		Game.keys['fire'] = true;
+		board.step(0);
+		expect(board.objects.length).toBe(5);
+	});
+
 
 });
 
