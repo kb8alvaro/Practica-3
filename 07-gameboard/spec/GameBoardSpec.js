@@ -126,24 +126,4 @@ describe("Prueba Game Board", function(){
 
 });
 
-/*
 
-
-var GameBoard = function() {
-
-    // Encontrar el primer objeto de tipo type que colisiona con obj
-    // Si se llama sin type, en contrar el primer objeto de cualquier
-    // tipo que colisiona con obj
-    this.collide = function(obj,type) {
-	return this.detect(function() {
-	    if(obj != this) {
-		var col = (!type || this.type & type) && board.overlap(obj,this)
-		return col ? this : false;
-	    }
-	});
-    };
-
-
-};
-
-*/
