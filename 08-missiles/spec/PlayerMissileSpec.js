@@ -27,3 +27,53 @@
     la clase en el prototipo
 
 */
+
+describe("Prueba Player Missile", function(){
+
+  beforeEach(function(){
+		loadFixtures('index.html');
+		s = SpriteSheet;	
+	});
+  afterEach(function(){
+		SpriteSheet = s;	
+	});
+
+
+	it("PlayerMissile.step()", function(){
+		SpriteSheet = { map: {missile: { sx: 0, sy: 30, w: 2, h: 10, frames: 1 } } }
+		var board = new GameBoard();
+		spyOn(board,"remove");
+		var pm = new PlayerMissile(0,17);
+		board.add(pm);
+		pm.step(0.01);
+		expect(pm.y).toEqual(0);
+		pm.step(1);
+		expect(board.remove).toHaveBeenCalled();
+	});
+
+});
+
+/*
+// Constructor los misiles.
+// Los metodos de esta clase los añadimos a su prototipo. De esta
+// forma solo existe una copia de cada uno para todos los misiles, y
+// no una copia para cada objeto misil
+var PlayerMissile = function(x,y) {
+    this.w = SpriteSheet.map['missile'].w;
+    this.h = SpriteSheet.map['missile'].h;
+    this.x = x - this.w/2; 
+
+    this.y = y - this.h; 
+    this.vy = -700;
+};
+
+
+PlayerMissile.prototype.draw = function(ctx)  {
+    SpriteSheet.draw(ctx,'missile',this.x,this.y);
+};
+
+
+$(function() {
+    Game.initialize("game",sprites,startGame);
+});
+*/
